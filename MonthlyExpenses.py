@@ -452,6 +452,13 @@ def save_and_update():
         time.sleep(2)
         subprocess.call([opener, (curYear + '.xlsx')])
 
+def add_to_database():
+    data = {}
+    data.expense = exp
+    data.category = cat
+    data.other = sub
+    data.cost = cost
+
 def secret():
     #Updates utilities and groceries in Monthly Breakdown
     groceries = '=\'['+xl+']Summary\'$V$3'
