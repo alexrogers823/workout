@@ -104,7 +104,7 @@ def circuitDetails():
     global x
     d = 1
     x += 1
-    cir['A'+str(x)] = 'Day '+str(d)+':'
+    cir['A'+str(x)] = 'Day {}:'.format(str(d))
     while True:
         x += 1
         print('Enter workout in the circuit')
@@ -120,7 +120,7 @@ def circuitDetails():
         if yep.lower().startswith('n'):
             d += 1
             x += 2
-            cir['A'+str(x)] = 'Day '+str(d)+':'
+            cir['A'+str(x)] = 'Day {}:'.format(str(d))
             continue
         if yep.lower().startswith('e'):
             break
@@ -396,15 +396,18 @@ def allMuscles():
 wb = px.load_workbook('List of Workouts.xlsx')
 ind = wb.get_sheet_by_name('Individual Workouts')
 cir = wb.get_sheet_by_name('Circuit Workouts')
-armList = ['Arms', 'Biceps', 'Triceps', 'Forearms']
-shoulderList = ['Shoulders', 'Delts', 'Traps']
-chestList = ['Chest', 'Pecs']
-ubackList = ['Back', 'Upper Back', 'Lats']
-lbackList = ['Back', 'Lower Back']
-buttList = ['Butt', 'Gluts']
-thighList = ['Thighs', 'Quads', 'Hamstrings']
-legList = ['Legs', 'Calf', 'Calves']
-masterList = allMuscles()
+
+#masterList = allMuscles()
+masterList = {
+    'Arms': ['Arms', 'Biceps', 'Triceps', 'Forearms'],
+    'Shoulders': ['Shoulders', 'Delts', 'Traps'],
+    'Chest': ['Chest', 'Pecs'],
+    'UpperBack': ['Back', 'Upper Back', 'Lats'],
+    'LowerBack': ['Back', 'Lower Back'],
+    'Butt': ['Butt', 'Gluts'],
+    'Thighs': ['Thighs', 'Quads', 'Hamstrings'],
+    'Legs': ['Legs', 'Calf', 'Calves']
+    }
 
 setFormat()
 x = ind.max_row
