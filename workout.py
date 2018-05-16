@@ -68,7 +68,7 @@ def addWorkout():
         x += 2
         print('What\'s the name of the circuit?')
         name = input()
-        cir['A'+str(x)] = 'CIR '+name.title()
+        cir['A'+str(x)] = 'CIR {}'.format(name.title())
     print('What are the muscles it targets? (max 2)')
     mus = input().title().split()
     for i in range(len(mus)):
@@ -109,7 +109,7 @@ def circuitDetails():
         x += 1
         print('Enter workout in the circuit')
         sub = input()
-        cir['A'+str(x)] = ' - '+sub.title()
+        cir['A'+str(x)] = ' - {}'.format(sub.title())
         print('How many sets?')
         sets = input()
         cir['B'+str(x)] = sets
