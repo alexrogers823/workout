@@ -1,7 +1,7 @@
 import openpyxl as px
 import time, random, datetime, webbrowser
 
-def setFormat():
+def setFormat(): #Formatting in excel
     titlesI = ['Workout', 'Primary Muscle', 'Secondary Muscle', 'Std. Sets', 'Std. Reps', 'Start Weight', 'End Weight', 'Max Weight']
     for i in range(len(titlesI)): 
         ind[chr(65+i)+'1'] = titlesI[i]
@@ -40,7 +40,7 @@ def mainMenu():
         return
 
 
-def pre_Workout():
+def pre_Workout(): #selects what to generate based on user's output
     global mode, x
     while mode != 'single' or mode != 'circuit':
         print('Is this a single workout or a circuit?')
@@ -57,7 +57,7 @@ def pre_Workout():
             time.sleep(2)
     return
 
-def addWorkout():
+def addWorkout(): #Adds newly input workout to excel
     global x
     if mode == 'single':
         x += 1
@@ -100,7 +100,7 @@ def addWorkout():
         circuitDetails()           
     moreWorkouts()
 
-def circuitDetails():
+def circuitDetails(): #Adds circuit to excel
     global x
     d = 1
     x += 1
@@ -136,7 +136,7 @@ def moreWorkouts():
     else:
         mainMenu()
 
-def generate():
+def generate(): #Generates random workout based on days and type of workout
     global txtlist
     typ = setWktType()
     if typ == 'dropset':
@@ -233,7 +233,7 @@ def generate():
     acceptWorkout()
     return
 
-def circuitGenerate():
+def circuitGenerate(): #Generates circuit workout
     global txtlist
     print('Which circuit are you trying to do?')
     print()
@@ -273,7 +273,7 @@ def acceptWorkout():
         txtfile()
         return
 
-def howTo():
+def howTo(): #Looks up workouts on YouTube 
     print('Which ones? (Pick the corresponding number)')
     print()
     for i in range(len(txtlist)):
@@ -309,7 +309,7 @@ def setWktType():
     return typ
     
 
-def txtfile():
+def txtfile(): #Prints generated workout to a text file
     if mode == 'single':
         sun = (datetime.timedelta(days=6)).days - datetime.datetime.today().weekday()
         top = datetime.datetime.now() + datetime.timedelta(days=sun)
