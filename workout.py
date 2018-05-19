@@ -288,8 +288,7 @@ def howTo(): #Looks up workouts on YouTube
     return
     
 
-def setWktType():
-    typ = 'standard'
+def setWktType(typ='standard'):
     print('Your workout is set to standard. Is this okay?')
     if input().lower().startswith('n'):
         print('Which mode do you want?')
@@ -352,7 +351,7 @@ def logWeight():
     elif wt.lower().startswith('m'):
         ind['H'+str(d)] = num
     else:
-        print('Must specify which weight. Try again')
+        print('Must specify which weight. Try again') #convert this into a try/else
         time.sleep(1)
         mainMenu()
     
