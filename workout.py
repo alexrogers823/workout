@@ -3,7 +3,7 @@ import time, random, datetime, webbrowser
 
 def setFormat(): #Formatting in excel
     titlesI = ['Workout', 'Primary Muscle', 'Secondary Muscle', 'Std. Sets', 'Std. Reps', 'Start Weight', 'End Weight', 'Max Weight']
-    for i in range(len(titlesI)): 
+    for i in range(len(titlesI)):
         ind[chr(65+i)+'1'] = titlesI[i]
     ind.column_dimensions['A'].width = 30
     ind.column_dimensions['B'].width = 20
@@ -97,7 +97,7 @@ def addWorkout(): #Adds newly input workout to excel
         print('What is the reference?')
         ref = input()
         cir['G'+str(x)] = ref
-        circuitDetails()           
+        circuitDetails()
     moreWorkouts()
 
 def circuitDetails(): #Adds circuit to excel
@@ -125,7 +125,7 @@ def circuitDetails(): #Adds circuit to excel
         if yep.lower().startswith('e'):
             break
     return
-        
+
 
 def moreWorkouts():
     print('Are there any more %s workouts?' % (mode))
@@ -160,78 +160,80 @@ def generate(): #Generates random workout based on days and type of workout
     for i in range(1, days+1):
         txtlist.append('Day %s:' % (i))
         print('Day %s:' % (i))
-        if y == 0:
+        if y % 2 == 0:
             day = upper
-            for j in range(exer):
-                w = random.randint(0, len(upper)-1)
-                for s in range(2, x+1):
-                    if day[w] == ind['A'+str(s)].value and ind['F'+str(s)].value != None:
-                        st = round(int(ind['F'+str(s)].value)*start)
-                        begin = ', Start Wt: '+str(st)
-                        goal *= st
-                        goal = round(goal)
-                        ideal = ', Goal: '+str(goal)
-                        break
-                    else:
-                        begin = ''
-                        ideal = ''
-                    if day[w] == ind['A'+str(s)].value and ind['G'+str(s)].value != None:
-                        end = ', End Wt: '+str(ind['G'+str(s)].value)
-                        break
-                    else:
-                        end = ''
-                print(day[w]+'%s%s%s' % (begin, end, ideal))
-                upTxt = day[w]+begin+end+ideal
-                if typ == 'dropset' and ind['F'+str(s)].value != None:
-                    theDrop = str('(Drop to %s for last set)' % (round(goal*drop)))
-                else:
-                    theDrop = ''
-                txtlist.append(upTxt)
-                if typ == 'dropset':
-                    txtlist.append(theDrop)
-                day.remove(day[w])
-        if y == 1:
+        else:
             day = lower
-            for j in range(exer):
-                w = random.randint(0, len(lower)-1)
-                for s in range(2, x+1):
-                    if day[w] == ind['A'+str(s)].value and ind['F'+str(s)].value != None:
-                        st = round(int(ind['F'+str(s)].value)*start)
-                        begin = ', Start Wt: '+str(st)
-                        goal *= st
-                        goal = round(goal)
-                        ideal = ', Goal: '+str(goal)
-                        break
-                    else:
-                        begin = ''
-                        ideal = ''
-                    if day[w] == ind['A'+str(s)].value and ind['G'+str(s)].value != None:
-                        end = ', End Wt: '+str(ind['G'+str(s)].value)
-                        break
-                    else:
-                        end = ''
-                print(day[w]+'%s%s%s' % (begin, end, ideal))
-                downTxt = day[w]+begin+end+ideal
-                if typ == 'dropset' and ind['F'+str(s)].value != None:
-                    theDrop = str('(Drop to %s for last set)' % (round(goal*drop)))
+        for j in range(exer):
+            w = random.randint(0, len(day)-1)
+            for s in range(2, x+1):
+                if day[w] == ind['A'+str(s)].value and ind['F'+str(s)].value != None:
+                    st = round(int(ind['F'+str(s)].value)*start)
+                    begin = ', Start Wt: '+str(st)
+                    goal *= st
+                    goal = round(goal)
+                    ideal = ', Goal: '+str(goal)
+                    break
                 else:
-                    theDrop = ''
-                txtlist.append(downTxt)
-                if typ == 'dropset':
-                    txtlist.append(theDrop)
-                day.remove(day[w])
+                    begin = ''
+                    ideal = ''
+                if day[w] == ind['A'+str(s)].value and ind['G'+str(s)].value != None:
+                    end = ', End Wt: '+str(ind['G'+str(s)].value)
+                    break
+                else:
+                    end = ''
+            print(day[w]+'%s%s%s' % (begin, end, ideal))
+            txt = day[w]+begin+end+ideal
+            if typ == 'dropset' and ind['F'+str(s)].value != None:
+                theDrop = str('(Drop to %s for last set)' % (round(goal*drop)))
+            else:
+                theDrop = ''
+            txtlist.append(txt)
+            if typ == 'dropset':
+                txtlist.append(theDrop)
+            day.remove(day[w])
         txtlist.append('')
         print()
         time.sleep(4)
         y += 1
-        if y == 2:
-            y -= 2
+        # if y == 2:
+        #     y -= 2
     print('Do you want to search any of these workouts?')
-    lookup = input()
-    if lookup.lower().startswith('y'):
+    # lookup = input()
+    if input().lower().startswith('y'):
         howTo()
     acceptWorkout()
     return
+        # if y == 1:
+        #     day = lower
+        #     for j in range(exer):
+        #         w = random.randint(0, len(lower)-1)
+        #         for s in range(2, x+1):
+        #             if day[w] == ind['A'+str(s)].value and ind['F'+str(s)].value != None:
+        #                 st = round(int(ind['F'+str(s)].value)*start)
+        #                 begin = ', Start Wt: '+str(st)
+        #                 goal *= st
+        #                 goal = round(goal)
+        #                 ideal = ', Goal: '+str(goal)
+        #                 break
+        #             else:
+        #                 begin = ''
+        #                 ideal = ''
+        #             if day[w] == ind['A'+str(s)].value and ind['G'+str(s)].value != None:
+        #                 end = ', End Wt: '+str(ind['G'+str(s)].value)
+        #                 break
+        #             else:
+        #                 end = ''
+        #         print(day[w]+'%s%s%s' % (begin, end, ideal))
+        #         downTxt = day[w]+begin+end+ideal
+        #         if typ == 'dropset' and ind['F'+str(s)].value != None:
+        #             theDrop = str('(Drop to %s for last set)' % (round(goal*drop)))
+        #         else:
+        #             theDrop = ''
+        #         txtlist.append(downTxt)
+        #         if typ == 'dropset':
+        #             txtlist.append(theDrop)
+        #         day.remove(day[w])
 
 def circuitGenerate(): #Generates circuit workout
     global txtlist
@@ -263,8 +265,8 @@ def circuitGenerate(): #Generates circuit workout
 
 def acceptWorkout():
     print('Do you accept this workout?')
-    go = input()
-    if go.lower().startswith('n'):
+    # go = input()
+    if input().lower().startswith('n'):
         if mode == 'single':
             generate()
         if mode == 'circuit':
@@ -273,20 +275,20 @@ def acceptWorkout():
         txtfile()
         return
 
-def howTo(): #Looks up workouts on YouTube 
+def howTo(): #Looks up workouts on YouTube
     print('Which ones? (Pick the corresponding number)')
     print()
     for i in range(len(txtlist)):
         print(i, txtlist[i])
-        
+
     searches = input().split()
-    
+
     for k in range(len(searches)):
         yNum = int(searches[k])
         yTube = txtlist[yNum]
         webbrowser.open('https://www.youtube.com/results?search_query=%s' % (yTube.replace(' ','+')))
     return
-    
+
 
 def setWktType(typ='standard'):
     print('Your workout is set to standard. Is this okay?')
@@ -306,7 +308,7 @@ def setWktType(typ='standard'):
         else:
             typ = 'standard'
     return typ
-    
+
 
 def txtfile(): #Prints generated workout to a text file
     if mode == 'single':
@@ -323,10 +325,10 @@ def txtfile(): #Prints generated workout to a text file
         with open(cir+'.txt', 'wt') as f:
             for i in range(len(txtlist)):
                 print(txtlist[i], file=f)
-    
+
 
 def logWeight():
-    display = [] 
+    display = []
     print('What muscle does this workout target?')
     group = input()
     for i in range(2, x+1):
@@ -354,7 +356,7 @@ def logWeight():
         print('Must specify which weight. Try again') #convert this into a try/else
         time.sleep(1)
         mainMenu()
-    
+
 def upperWkts():
     upperList = []
     for i in range(2, x+1):
@@ -388,8 +390,8 @@ def allMuscles():
     for i in range(len(legList)):
         mas.append(legList[i])
     return mas
-    
-                                                                    
+
+
 #Main
 #wb = px.load_workbook('List of Workouts TEST.xlsx')
 wb = px.load_workbook('List of Workouts.xlsx')
