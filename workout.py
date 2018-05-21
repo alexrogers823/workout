@@ -169,21 +169,22 @@ def generate(): #Generates random workout based on days and type of workout
             for s in range(2, x+1):
                 if day[w] == ind['A'+str(s)].value and ind['F'+str(s)].value != None:
                     st = round(int(ind['F'+str(s)].value)*start)
-                    begin = ', Start Wt: '+str(st)
-                    goal *= st
-                    goal = round(goal)
+                    # begin = ', Start Wt: '+str(st)
+                    goal = round(goal*st)
                     ideal = ', Goal: '+str(goal)
                     break
                 else:
-                    begin = ''
+                    # begin = ''
                     ideal = ''
                 if day[w] == ind['A'+str(s)].value and ind['G'+str(s)].value != None:
-                    end = ', End Wt: '+str(ind['G'+str(s)].value)
+                    end = str(ind['G'+str(s)].value)
                     break
                 else:
-                    end = ''
-            print(day[w]+'%s%s%s' % (begin, end, ideal))
-            txt = day[w]+begin+end+ideal
+                    # end = ''
+            # print(day[w]+'%s%s%s' % (begin, end, ideal))
+            print('{}, Start Wt: {}, End Wt: {}{}'.format(day[w], st, end, ideal))
+            # txt = day[w]+begin+end+ideal
+            txt = '{}, Start Wt: {}, End Wt: {}{}'.format(day[w], st, end, ideal)
             if typ == 'dropset' and ind['F'+str(s)].value != None:
                 theDrop = str('(Drop to %s for last set)' % (round(goal*drop)))
             else:
@@ -251,13 +252,14 @@ def circuitGenerate(): #Generates circuit workout
     for c in range(ans, x):
         if cir['A'+str(c)].value is None:
             print()
-            continue
+            continue #why do we need this?
         elif not cir['A'+str(c)].value.startswith('CIR'):
             print(cir['A'+str(c)].value, cir['B'+str(c)].value)
             if str(cir['A'+str(c)].value).startswith('Day'):
                 txtlist.append(cir['A'+str(c)].value)
             else:
-                cycle = cir['A'+str(c)].value+', Sets: '+cir['B'+str(c)].value
+                # cycle = cir['A'+str(c)].value+', Sets: '+cir['B'+str(c)].value
+                cycle = '{}, Sets: {}'.format(cir['A'+str(c)].value, cir['B'+str(c)].value)
                 txtlist.append(cycle)
         else:
             break
