@@ -53,7 +53,7 @@ def pre_Workout(): #selects what to generate based on user's output
             x = cir.max_row
             break
         else:
-            print('Must specify a single or circuit workout')
+            print('Must specify a single or circuit workout') #Convert into try/else
             time.sleep(2)
     return
 
@@ -130,8 +130,7 @@ def circuitDetails(): #Adds circuit to excel
 def moreWorkouts():
     print('Are there any more %s workouts?' % (mode))
     print()
-    more = input()
-    if more.lower().startswith('y'):
+    if input().lower().startswith('y'):
         addWorkout()
     else:
         mainMenu()
