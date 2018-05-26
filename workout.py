@@ -43,18 +43,22 @@ def mainMenu():
 def pre_Workout(): #selects what to generate based on user's output
     global mode, x
     while mode != 'single' or mode != 'circuit':
-        print('Is this a single workout or a circuit?')
-        m = input()
-        if m.lower().startswith('sin'):
-            mode = 'single'
-            break
-        elif m.lower().startswith('cir'):
-            mode = 'circuit'
-            x = cir.max_row
-            break
+        try:
+            print('Is this a single workout or a circuit?')
+            m = input()
+            if not m.lower().startswith('sin') or not m.lower().startswith('cir'):
+                raise Exception
+        except Exception:
+            print('Must specify a single or circuit workout')
+            time.sleep(1)
         else:
-            print('Must specify a single or circuit workout') #Convert into try/else
-            time.sleep(2)
+            if m.lower().startswith('sin'):
+                mode = 'single'
+                break
+            elif m.lower().startswith('cir'):
+                mode = 'circuit'
+                x = cir.max_row
+                break
     return
 
 def addWorkout(): #Adds newly input workout to excel
