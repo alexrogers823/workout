@@ -347,20 +347,25 @@ def logWeight():
     for i in range(2, x+1):
         if ind['A'+str(i)].value == display[wk]:
             d = i
-    print('Which weight? [Start Wt, End Wt, Max Wt]')
-    wt = input()
-    print('What number?')
-    num = int(input())
-    if wt.lower().startswith('s'):
-        ind['F'+str(d)] = num
-    elif wt.lower().startswith('e'):
-        ind['G'+str(d)] = num
-    elif wt.lower().startswith('m'):
-        ind['H'+str(d)] = num
-    else:
-        print('Must specify which weight. Try again') #convert this into a try/else
-        time.sleep(1)
-        mainMenu()
+    while True:
+        try:
+            print('Which weight? [Start Wt, End Wt, Max Wt]')
+            wt = input()
+            print('What number?')
+            num = int(input())
+            if not wt.lower().startswith('s') or not wt.lower().startswith('e') not wt.lower().startswith('m'):
+                raise Exception
+        except Exception:
+            print('Must specify which weight. Try again')
+            time.sleep(1)
+        else:
+            if wt.lower().startswith('s'):
+                ind['F'+str(d)] = num
+            elif wt.lower().startswith('e'):
+                ind['G'+str(d)] = num
+            elif wt.lower().startswith('m'):
+                ind['H'+str(d)] = num
+            break
 
 def upperWkts():
     upperList = []
