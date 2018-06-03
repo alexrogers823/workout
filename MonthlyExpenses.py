@@ -37,15 +37,16 @@ def reviewMaterials():
         time.sleep(2)
         subprocess.call([opener, (curYear + '.xlsx')])
 
+#Sets new year automatically
 def set_new_year():
-    ny = px.load_workbook('blank.xlsx')
+    ny = px.load_workbook('blank.xlsx') #Dont need this anymore bc of try/else below
     ny.create_sheet(index = 0, title = 'Summary')
     ny.get_sheet_by_name('Summary')['J1'] = 'Average'
     ny.create_sheet(index = 1, title = 'Category Words')
     setCategorySheet(ny.get_sheet_by_name('Category Words'))
     ny.save(str(int(year)+1) +' Monthly Expenses.xlsx')
     return
-    
+
 def setWorkbook():
     if Sum[get_column_letter(mNum+9) + '1'].value == 'Average':
         if mNum == 12:
@@ -72,7 +73,7 @@ def setSummarySheet():
     for a in range(10, 12):
         Sum[get_column_letter(mNum+a) + '1'].style = Style(font=Font(name='Georgia', bold=True, color='AB800A'))
 
-    Sum[get_column_letter(mNum+12)+'1'].style = Style(font=Font(name='Impact', bold=True, color='2E2EB8'))       
+    Sum[get_column_letter(mNum+12)+'1'].style = Style(font=Font(name='Impact', bold=True, color='2E2EB8'))
     Sum[get_column_letter(mNum + 9) +'1'].style = Style(font=Font(name='Georgia', bold=True, color='2E2EB8'))
     for j in range(len(cate)):
         Sum['H' + str(j+2)] = cate[j] + ':'
@@ -108,8 +109,8 @@ def setSubCategories():
             if cword['B'+str(j)].value == categories[i]:
                 masterCate[categories[i]].append((cword['A'+str(j)].value).title())
     return masterCate
-        
-       
+
+
 def formatSheet(month):
     month.column_dimensions['A'].width = 23
     month.column_dimensions['B'].width = 15
@@ -125,7 +126,7 @@ def formatSheet(month):
 
     return styleGA
 
-def setMonth():  
+def setMonth():
     month['A1'] = 'Expense'
     month['A1'].style = GA
     month['B1'] = 'Category'
@@ -157,7 +158,7 @@ def checkCate():
             theCate = cword['B'+str(i)].value
 
     return theCate
-            
+
 
 def addToCate(): #adds new keyword to category upon request
     d = cword.max_row
@@ -169,7 +170,7 @@ def addToCate(): #adds new keyword to category upon request
         print(i, categories[i])
     assign = int(input())
     cword['B'+str(d)] = categories[assign]
-    
+
 
 def addExpense():
     global x, keyword, items
@@ -269,7 +270,7 @@ def autoAdd(autoname, autocate, cash):
     items += 1
     return
 
-               
+
 
 def categoryTotal():
     ml = len(categories)
@@ -339,11 +340,11 @@ def categoryTotal():
             else:
                 Sum[get_column_letter(mNum+10) + str(i+2)] = '=\'['+str(int(year)-1)+' Monthly Expenses.xlsx]Summary\'!$V$'+str(i+2)
                 Sum[get_column_letter(mNum+11) + str(i+2)] = '=\'['+str(int(year)-1)+' Monthly Expenses.xlsx]Summary\'!$W$'+str(i+2)
-                
+
         #Below updates the 'other' category and total for month
         Sum[get_column_letter(mz+8) + str(ml-1)] = '=' +TM[g]+ '!E' + str(z) + '-SUM(Summary!' +get_column_letter(mz+8)+ '2:' +get_column_letter(mz+8)+ str(ml-2)+ ')'
         Sum[get_column_letter(mz+8) + str(ml+1)] = '=SUM('+get_column_letter(mz+8)+ '2:' +get_column_letter(mz+8)+ str(ml-1)+ ')'
-        
+
     # Updating the year total and average
     Sum['I' +str(ml-1)] = '=SUM(J' +str(ml-1)+ ':'+get_column_letter(mNum+9) +str(ml-1)+ ')'
     if mNum > 3:
@@ -357,7 +358,7 @@ def categoryTotal():
         if Sum[get_column_letter(mNum+12)+str(r+2)].value != None and Sum[get_column_letter(mNum+9)+str(r+2)].value > Sum[get_column_letter(mNum+12)+str(r+2)].value:
             Sum[get_column_letter(mNum+12)+str(r+2)].style = Style(font=Font(name='Calibri', color='FF0000'))
 
-     
+
 def cumulativePrice():
     m = x - 1
     if month['C'+str(x)].value == 'qq':
@@ -407,7 +408,7 @@ def monthChartBreakdown():
         pie.legend.layout = Layout(manualLayout=ManualLayout(x=0.25, y=0.25, h=0.99, w=0.25))
 
         wb.get_sheet_by_name(TM[i]).add_chart(pie, 'G3')
-    
+
 def chartBreakdown():
     pie = PieChart()
     z = len(categories)
@@ -420,7 +421,7 @@ def chartBreakdown():
     pie.width = 15.0
     pie.height = 12.0
     pie.legend.layout = Layout(manualLayout=ManualLayout(x=0.25, y=0.25, h=0.99, w=0.25))
-    
+
     Sum.add_chart(pie, 'A1')
     pie.dataLabels = DataLabelList()
     pie.dataLabels.showPercent = True
@@ -468,7 +469,7 @@ def secret():
     LM['B5'] = utilities #utility 3-mo avg
     LM['B6'] = groceries #groceries 3-mo avg
     scrt.save('Life Management.xlsx')
-  
+
 
 def orderOfStatements():
     while True:
@@ -563,7 +564,7 @@ def shortExit():
     secret()
     return
 
-                           
+
 #Main
 year = datetime.datetime.today().strftime('%Y')
 #sched = BackgroundScheduler()
@@ -613,7 +614,7 @@ def routine():
         print()
         reviewMaterials()
         revertStyle()
-        orderOfStatements()       
+        orderOfStatements()
     else:
         receipts == False
 
