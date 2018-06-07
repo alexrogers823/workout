@@ -541,8 +541,12 @@ first = False
 
 #TM represents current month for formatting in summary tab. Jan = 1
 TM = ['Year Total','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec']
-
-curYear = 'GITHub {} Monthly Expenses'.format(year)
+#For administrator
+print('Enter password. Or just press enter')
+if input() == 'alex':
+    curYear = '{} Monthly Expenses'.format(year)
+else:
+    curYear = 'GITHub {} Monthly Expenses'.format(year)
 xl = curYear + '.xlsx'
 try:
     wb = px.load_workbook(xl)
