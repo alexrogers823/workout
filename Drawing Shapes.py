@@ -27,44 +27,44 @@ def draw():
 
     window.exitonclick()
 
-def squares_and_diamonds():
+def squares_and_diamonds(): #Will draw cool pattern using Pythagorean theorem
     x = 450
     y = (x/2)**2
     c = x**2
     window = turtle.Screen()
     window.bgcolor('black')
-    d = turtle.Turtle()
-    d.shape('arrow')
- #   d.color('red')
-    d.penup()
-    d.setpos(-250,250)
-    d.pendown()
+    shape = turtle.Turtle()
+    shape.shape('arrow')
+ #   shape.color('red')
+    shape.penup()
+    shape.setpos(-250,250)
+    shape.pendown()
     for s in range(6):
         for i in range(4):
-            d.color('red')
-            d.forward(x)
-            d.right(90)
-        d.penup()
-        d.left(45)
-        d.forward((c+c)**(1/2)/4)
-        d.right(45)
-        d.forward((((((c+c)**(1/2)/4)**2)+(((c+c)**(1/2)/4)**2))**(1/2))/2)
-        d.pendown()
-        d.right(45)
+            shape.color('red')
+            shape.forward(x)
+            shape.right(90)
+        shape.penup()
+        shape.left(45)
+        shape.forward((c+c)**(1/2)/4)
+        shape.right(45)
+        shape.forward((((((c+c)**(1/2)/4)**2)+(((c+c)**(1/2)/4)**2))**(1/2))/2)
+        shape.pendown()
+        shape.right(45)
         for i in range(4):
-            d.color('blue')
-            d.forward(x+(((((c+c)**(1/2)/4)**2)+(((c+c)**(1/2)/4)**2))**(1/2))/8)
-            d.right(90)
-        d.penup()
-        d.right(45)
-        d.forward(x/4)
-        d.left(45)
-        d.pendown()
+            shape.color('blue')
+            shape.forward(x+(((((c+c)**(1/2)/4)**2)+(((c+c)**(1/2)/4)**2))**(1/2))/8)
+            shape.right(90)
+        shape.penup()
+        shape.right(45)
+        shape.forward(x/4)
+        shape.left(45)
+        shape.pendown()
         x = (y+y)**(1/2)
         y = (x/2)**2
         c = x**2
-        
-        
+
+
 
 #Advanced code from class
 def draw_square(some_turtle):
