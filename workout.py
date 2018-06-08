@@ -44,8 +44,8 @@ def pre_Workout(): #selects what to generate based on user's output
     global mode, x
     while mode != 'single' or mode != 'circuit':
         try:
-            print('Is this a single workout or a circuit?')
-            m = input()
+            # print('Is this a single workout or a circuit?')
+            m = input('Is this a single workout or a circuit?')
             if not m.lower().startswith('sin') or not m.lower().startswith('cir'):
                 raise Exception
         except Exception:
@@ -65,21 +65,21 @@ def addWorkout(): #Adds newly input workout to excel
     global x
     if mode == 'single':
         x += 1
-        print('What\'s the workout?')
-        name = input()
+        name = input('What\'s the workout?')
+        # name = input()
         ind['A'+str(x)] = name.title()
     if mode == 'circuit':
         x += 2
-        print('What\'s the name of the circuit?')
-        name = input()
+        name = ('What\'s the name of the circuit?')
+        # name = input()
         cir['A'+str(x)] = 'CIR {}'.format(name.title())
-    print('What are the muscles it targets? (max 2)')
-    mus = input().title().split()
+    # print('What are the muscles it targets? (max 2)')
+    mus = input('What are the muscles it targets? (max 2)').title().split()
     for i in range(len(mus)):
         if mode == 'single':
             if mus[i] == 'Back':
-                print('Is it [u]pper, [l]ower, or [a]ll of your back?')
-                back = input()
+                back = input('Is it [u]pper, [l]ower, or [a]ll of your back?')
+                # back = input()
                 if back.lower().startswith('u'):
                     ind[chr(66+i)+str(x)] = 'Upper Back'
                 elif back.lower().startswith('l'):
@@ -93,13 +93,13 @@ def addWorkout(): #Adds newly input workout to excel
         if mode == 'circuit':
             cir[chr(67+i)+str(x)] = mus[i]
     if mode == 'circuit':
-        print('Number of workout days and rest days (if specified)')
-        rest = input()
+        rest = input('Number of workout days and rest days (if specified)')
+        # rest = input()
         rest.split()
         for r in range(len(rest)):
             cir[chr(69+i)+str(x)] = rest[r]
-        print('What is the reference?')
-        ref = input()
+        ref = input('What is the reference?')
+        # ref = input()
         cir['G'+str(x)] = ref
         circuitDetails()
     moreWorkouts()
@@ -111,14 +111,14 @@ def circuitDetails(): #Adds circuit to excel
     cir['A'+str(x)] = 'Day {}:'.format(str(d))
     while True:
         x += 1
-        print('Enter workout in the circuit')
-        sub = input()
+        sub = input('Enter workout in the circuit')
+        # sub = input()
         cir['A'+str(x)] = ' - {}'.format(sub.title())
-        print('How many sets?')
-        sets = input()
+        sets = input('How many sets?')
+        # sets = input()
         cir['B'+str(x)] = sets
-        print('[A]nother one, go to [n]ext day, or [e]nd?')
-        yep = input()
+        yep = input('[A]nother one, go to [n]ext day, or [e]nd?')
+        # yep = input()
         if yep.lower().startswith('a'):
             continue
         if yep.lower().startswith('n'):
@@ -153,8 +153,8 @@ def generate(): #Generates random workout based on days and type of workout
         goal = 1.1**4
         start = 1
     y = 0
-    print('How many exercises per day?')
-    exer = int(input())
+    # print('How many exercises per day?')
+    exer = int(input('How many exercises per day?'))
     print('Generating...')
     print()
     time.sleep(3)
@@ -334,8 +334,8 @@ def txtfile(): #Prints generated workout to a text file
 
 def logWeight():
     display = []
-    print('What muscle does this workout target?')
-    group = input()
+    group = input('What muscle does this workout target?')
+    # group = input()
     for i in range(2, x+1):
         if ind['B'+str(i)].value == group.title():
             display.append(ind['A'+str(i)].value)
@@ -349,8 +349,8 @@ def logWeight():
             d = i
     while True:
         try:
-            print('Which weight? [Start Wt, End Wt, Max Wt]')
-            wt = input()
+            wt = input('Which weight? [Start Wt, End Wt, Max Wt]')
+            # wt = input()
             print('What number?')
             num = int(input())
             if not wt.lower().startswith('s') or not wt.lower().startswith('e') not wt.lower().startswith('m'):
