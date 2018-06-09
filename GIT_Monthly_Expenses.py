@@ -51,10 +51,10 @@ def websites(): #Manages websites used to review payments
         names.append(Sum[get_column_letter(mNum+14)+str(w)].value)
         w += 1
     if len(names) == 0: #or add.lower().startswith('ad'):
-        print('Bank website setup:')
-        print()
-        print('Please enter the FULL NAME of the banks you use, separated by a comma (,)')
-        names = input().split(',')
+        print('Bank website setup:\n')
+        # print()
+        names = input('Please enter the FULL NAME of the banks you use, separated by a comma (,)\n').split(',')
+        # names = input().split(',')
     for i in names:
         sites.append('https://www.{}.com'.format(names[i].lower().replace(' ', '')))
 
@@ -218,7 +218,8 @@ def addExpense():
     if val != '':
         month['B'+str(x)] = val.title()
     else:
-        print('Under which category? (Ex: %s, %s, %s)' % (categories[Ex1], categories[Ex2], categories[Ex3]))
+        # print('Under which category? (Ex: %s, %s, %s)' % (categories[Ex1], categories[Ex2], categories[Ex3]))
+        print('Under which category? (Ex: {0[Ex1]}, {0[Ex2]}, {0[Ex3]})'.format(categories))
         print('(* at end to assign)')
         cat = input()
         if cat.endswith('*'):
@@ -247,8 +248,8 @@ def addExpense():
     month['C' + str(x)] = input()
     print()
     while True:
-        print('Total cost? (Enter as x.xx)')
-        cost = input()
+        cost = input('Total cost? (Enter as x.xx)\n')
+        # cost = input()
         try:
             month['D' + str(x)] = float(cost)
         except ValueError: #Prevents crash of code if input isn't a number
@@ -307,7 +308,7 @@ def categoryTotal():
             if y == 14: #Credit Card
                 ct = ['Credit','Credit Card','Bank', 'Interest', 'Cc']
             if y == 15: #Student Loans
-                ct = ['Student','Loans','Student Loans','Student Loan', 'FAFSA']
+                ct = ['Student','Loans','Student Loans','Student Loan', 'Fafsa']
             if y == 16: #Vehicle Expense
                 ct = ['Car','Motorcycle','Engine']
             if y == 17: #Entertainment
@@ -356,8 +357,8 @@ def categoryTotal():
 #        Sum[get_column_letter(mNum+11) + str(ml+1)] = '=ROUND(AVERAGE('+get_column_letter(mNum+6)+str(ml+1)+':'+get_column_letter(mNum+8)+str(ml+1)+'),2)'
         Sum[get_column_letter(mNum+11)+str(ml+1)] = '=ROUND(AVERAGE({0}{1}:{2}{1}),2)'.format(get_column_letter(mNum+6), ml+1, get_column_letter(mNum+8))
     else: #Sets year average and 3-mo average using last year's averages when month is Jan, Feb, or Mar (personal)
-        Sum[get_column_letter(mNum+10) + str(ml+1)] = '=\'/Users/alexrogers823/Documents/Python Projects/['+str(int(year)-1)+' Monthly Expenses.xlsx]Summary\'!$V$'+str(ml+1)
-        Sum[get_column_letter(mNum+11) + str(ml+1)] = '=\'/Users/alexrogers823/Documents/Python Projects/['+str(int(year)-1)+' Monthly Expenses.xlsx]Summary\'!$W$'+str(ml+1)
+        Sum[get_column_letter(mNum+10) + str(ml+1)] = '=\'/Users/alexrogers823/Documents/Python Projects/[{} Monthly Expenses.xlsx]Summary\'!$V${}'.format(int(year)-1, ml+1)
+        Sum[get_column_letter(mNum+11) + str(ml+1)] = '=\'/Users/alexrogers823/Documents/Python Projects/[{} Monthly Expenses.xlsx]Summary\'!$W${}'.format(int(year)-1, ml+1)
 
     for r in range(len(categories)): #Compares month goals to actual month number
         if Sum[get_column_letter(mNum+12)+str(r+2)].value != None and Sum[get_column_letter(mNum+9)+str(r+2)].value > Sum[get_column_letter(mNum+12)+str(r+2)].value:
@@ -452,8 +453,8 @@ def chartBreakdown():
 # Saves and opens excel workbook with new expenses added
 def save_and_update():
     wb.save(curYear + '.xlsx')
-    print('Would you like to see the additions to your expenses? [Y or N]')
-    openXL = input()
+    openXL = input('Would you like to see the additions to your expenses? [Y or N]\n')
+    # openXL = input()
     if openXL.lower().startswith('y'):
         opener = 'open'
         print('Opening...')
@@ -480,13 +481,13 @@ def goals():
         for c in range(len(categories)-3):
             if categories[c].startswith(goal[0]):
                 Sum[get_column_letter(mNum+12)+str(c+2)] = float(goal[1])
-        print('Another one?')
-        if input().lower().startswith('n'):
+        # print('Another one?')
+        if input('Another one?').lower().startswith('n'):
             k = False
             break
 
-    print('continue with Monthly Expenses?')
-    return input().lower()
+    # print('continue with Monthly Expenses?')
+    return input('continue with Monthly Expenses?').lower()
 
 # Puts late previous-month expenses in previous month tab
 def qqAdd():
@@ -542,8 +543,8 @@ first = False
 #TM represents current month for formatting in summary tab. Jan = 1
 TM = ['Year Total','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec']
 #For administrator
-print('Enter password. Or just press enter')
-if input() == 'alex':
+if input('Enter password. Or just press enter') == 'alex':
+# if input() == 'alex':
     curYear = '{} Monthly Expenses'.format(year)
 else:
     curYear = 'GITHub {} Monthly Expenses'.format(year)
@@ -575,8 +576,8 @@ else:
 
 
 #This is how the program starts
-print('Good {}. Do you have expenses to add? [Y or N]'.format(hour))
-addr = input()
+addr = input('Good {}. Do you have expenses to add? [Y or N]'.format(hour))
+# addr = input()
 if addr.lower().startswith('goal'):
     changeGoals = goals()
 if addr.lower().startswith('correct'): # or ideal.startswith('n'):
