@@ -53,10 +53,16 @@ def websites(): #Manages websites used to review payments
     if len(names) == 0: #or add.lower().startswith('ad'):
         print('Bank website setup:\n')
         # print()
-        names = input('Please enter the FULL NAME of the banks you use, separated by a comma (,)\n').split(',')
-        # names = input().split(',')
-    for i in names:
-        sites.append('https://www.{}.com'.format(names[i].lower().replace(' ', '')))
+        print('Please enter the FULL NAME of the banks you use, separated by a comma (,)\n')
+        while True:
+            try:
+                names = input().split(',')
+            except TypeError:
+                print('Cannot have a blank answer')
+            else:
+                for i in range(len(names)):
+                    sites.append('https://www.{}.com'.format(names[i].lower().replace(' ', '')))
+                break
 
     return sites
 
@@ -543,9 +549,10 @@ first = False
 #TM represents current month for formatting in summary tab. Jan = 1
 TM = ['Year Total','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec']
 #For administrator
-if input('Enter password. Or just press enter') == 'alex':
+if input('Enter password. Or just press enter\n') == 'alex':
 # if input() == 'alex':
     curYear = '{} Monthly Expenses'.format(year)
+    user = 'Alex'
 else:
     curYear = 'GITHub {} Monthly Expenses'.format(year)
 xl = curYear + '.xlsx'
@@ -576,7 +583,7 @@ else:
 
 
 #This is how the program starts
-addr = input('Good {}. Do you have expenses to add? [Y or N]'.format(hour))
+addr = input('Good {}, {}. Do you have expenses to add? [Y or N]'.format(hour, user='User'))
 # addr = input()
 if addr.lower().startswith('goal'):
     changeGoals = goals()
