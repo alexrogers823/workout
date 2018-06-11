@@ -3,15 +3,15 @@ import time, random, datetime, webbrowser
 
 def setFormat(): #Formatting in excel
     titlesI = ['Workout', 'Primary Muscle', 'Secondary Muscle', 'Std. Sets', 'Std. Reps', 'Start Weight', 'End Weight', 'Max Weight']
-    for i in range(len(titlesI)):
-        ind[chr(65+i)+'1'] = titlesI[i]
+    for title in titlesI:
+        ind[chr(65+i)+'1'] = title
     ind.column_dimensions['A'].width = 30
     ind.column_dimensions['B'].width = 20
     ind.column_dimensions['C'].width = 20
 
     titlesC = ['Circuit', 'Sets', 'Muscle Target 1', 'Muscle Target 2', 'Workout Days', 'Rest Days', 'Reference']
-    for i in range(len(titlesC)):
-        cir[chr(65+i)+'1'] = titlesC[i]
+    for circuit in titlesC:
+        cir[chr(65+i)+'1'] = circuit
 
 def mainMenu():
     global mode
@@ -45,7 +45,7 @@ def pre_Workout(): #selects what to generate based on user's output
     while mode != 'single' or mode != 'circuit':
         try:
             # print('Is this a single workout or a circuit?')
-            m = input('Is this a single workout or a circuit?')
+            m = input('Is this a single workout or a circuit?\n')
             if not m.lower().startswith('sin') or not m.lower().startswith('cir'):
                 raise Exception
         except Exception:
@@ -65,7 +65,7 @@ def addWorkout(): #Adds newly input workout to excel
     global x
     if mode == 'single':
         x += 1
-        name = input('What\'s the workout?')
+        name = input('What\'s the workout?\n')
         # name = input()
         ind['A'+str(x)] = name.title()
     if mode == 'circuit':
@@ -74,7 +74,7 @@ def addWorkout(): #Adds newly input workout to excel
         # name = input()
         cir['A'+str(x)] = 'CIR {}'.format(name.title())
     # print('What are the muscles it targets? (max 2)')
-    mus = input('What are the muscles it targets? (max 2)').title().split()
+    mus = input('What are the muscles it targets? (max 2)\n').title().split()
     for i in range(len(mus)):
         if mode == 'single':
             if mus[i] == 'Back':
@@ -93,7 +93,7 @@ def addWorkout(): #Adds newly input workout to excel
         if mode == 'circuit':
             cir[chr(67+i)+str(x)] = mus[i]
     if mode == 'circuit':
-        rest = input('Number of workout days and rest days (if specified)')
+        rest = input('Number of workout days and rest days (if specified)\n')
         # rest = input()
         rest.split()
         for r in range(len(rest)):
@@ -111,13 +111,13 @@ def circuitDetails(): #Adds circuit to excel
     cir['A'+str(x)] = 'Day {}:'.format(str(d))
     while True:
         x += 1
-        sub = input('Enter workout in the circuit')
+        sub = input('Enter workout in the circuit\n')
         # sub = input()
         cir['A'+str(x)] = ' - {}'.format(sub.title())
         sets = input('How many sets?')
         # sets = input()
         cir['B'+str(x)] = sets
-        yep = input('[A]nother one, go to [n]ext day, or [e]nd?')
+        yep = input('[A]nother one, go to [n]ext day, or [e]nd?\n')
         # yep = input()
         if yep.lower().startswith('a'):
             continue
@@ -154,7 +154,7 @@ def generate(): #Generates random workout based on days and type of workout
         start = 1
     y = 0
     # print('How many exercises per day?')
-    exer = int(input('How many exercises per day?'))
+    exer = int(input('How many exercises per day?\n'))
     print('Generating...')
     print()
     time.sleep(3)
@@ -299,8 +299,8 @@ def setWktType(typ='standard'):
     print('Your workout is set to standard. Is this okay?')
     if input().lower().startswith('n'):
         print('Which mode do you want?')
-        for i in range(len(types)):
-            print(types[i])
+        for i in types:
+            print(i)
         decide = input()
         if decide.lower().startswith('s'): #Standard or 6-10
             typ = 'standard'
@@ -349,7 +349,7 @@ def logWeight():
             d = i
     while True:
         try:
-            wt = input('Which weight? [Start Wt, End Wt, Max Wt]')
+            wt = input('Which weight? [Start Wt, End Wt, Max Wt]\n')
             # wt = input()
             print('What number?')
             num = int(input())
