@@ -263,7 +263,7 @@ def addExpense():
         else:
             break
 
-    if ['B'+str(x)] == 'Other Food' and float(cost) > float(25):
+    if ['B'+str(x)] == 'Other Food' and float(cost) > float(25): #Find out why this never works
         print('Did you pay for others\' food?')
         if input().lower().startswith('y'):
             month['D'+str(x)].fill = PatternFill(start_color='6DC066', fill_type='solid')
@@ -488,12 +488,12 @@ def goals():
             if categories[c].startswith(goal[0]):
                 Sum[get_column_letter(mNum+12)+str(c+2)] = float(goal[1])
         # print('Another one?')
-        if input('Another one?').lower().startswith('n'):
+        if input('Another one?\n').lower().startswith('n'):
             k = False
             break
 
     # print('continue with Monthly Expenses?')
-    return input('continue with Monthly Expenses?').lower()
+    return input('continue with Monthly Expenses?\n').lower()
 
 # Puts late previous-month expenses in previous month tab
 def qqAdd():
