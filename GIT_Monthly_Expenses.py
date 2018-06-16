@@ -225,7 +225,8 @@ def addExpense():
         month['B'+str(x)] = val.title()
     else:
         # print('Under which category? (Ex: %s, %s, %s)' % (categories[Ex1], categories[Ex2], categories[Ex3]))
-        print('Under which category? (Ex: {0[Ex1]}, {0[Ex2]}, {0[Ex3]})'.format(categories))
+        print('Under which category? (Ex: {0}, {0}, {0})'.format(random.choice(categories)))
+        # print('Under which category? (Ex: {0[Ex1]}, {0[Ex2]}, {0[Ex3]})'.format(categories))
         print('(* at end to assign)')
         cat = input()
         if cat.endswith('*'):
@@ -356,7 +357,7 @@ def categoryTotal():
 
     # Updates the year total and average
 #    Sum['I' +str(ml-1)] = '=SUM(J' +str(ml-1)+ ':'+get_column_letter(mNum+9) +str(ml-1)+ ')'
-    Sum['I' +str(ml+1)] = '=SUM(J{0}:{1}{1})'.format(ml-1, get_column_letter(mNum+9))
+    Sum['I' +str(ml+1)] = '=SUM(J{0}:{1}{0})'.format(ml-1, get_column_letter(mNum+9))
     if mNum > 3: #Sets year average and 3-mo average when current month is after March
 #        Sum[get_column_letter(mNum+10) + str(ml+1)] = '=ROUND(AVERAGE(J'+str(ml+1)+':'+get_column_letter(mNum+8)+str(ml+1)+'),2)'
         Sum[get_column_letter(mNum+10)+str(ml+1)] = '=ROUND(AVERAGE(J{0}:{1}{0}),2)'.format(ml+1, get_column_letter(mNum+8))
