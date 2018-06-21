@@ -8,9 +8,9 @@ import openpyxl as px
 #import save_and_update as saving
 import sys, os, subprocess, time, datetime, random, webbrowser, shift
 
-# This def will pull up your banks with webbrowser and ask you to login
-# It also tells you how many days until your next payment is due
 def reviewMaterials():
+''' This def will pull up your banks with webbrowser and ask you to login
+    It also tells you how many days until your next payment is due'''
     banks = websites()
     print('Login into your accounts')
     # dNum is the todays date expressed as a number. A global variable
@@ -23,7 +23,7 @@ def reviewMaterials():
     else:
         WF = '20+'
         Dis = '10+'
-    print('REMINDER: You have %s days to pay off your WF balance,\n and %s days to pay off your Discover balance' % (WF, Dis))
+    print('REMINDER: You have {} days to pay off your WF balance,\n and {} days to pay off your Discover balance'.format(WF, Dis))
     print()
     print('[Disabled webbrowser for testing]')
     time.sleep(1)
@@ -43,13 +43,14 @@ def reviewMaterials():
         time.sleep(2)
         subprocess.call([opener, (curYear + '.xlsx')])
 
-def websites(): #Manages websites used to review payments
+def websites():
+    '''Manages websites used to review payments'''
     names = []
     sites = []
-    w = 2
-    while Sum[get_column_letter(mNum+14)+str(w)].value != None:
-        names.append(Sum[get_column_letter(mNum+14)+str(w)].value)
-        w += 1
+    webNames = 2
+    while Sum[get_column_letter(mNum+14)+str(webNames)].value != None:
+        names.append(Sum[get_column_letter(mNum+14)+str(webNames)].value)
+        webNames += 1
     if len(names) == 0: #or add.lower().startswith('ad'):
         print('Bank website setup:\n')
         # print()
@@ -66,8 +67,8 @@ def websites(): #Manages websites used to review payments
 
     return sites
 
-# Checks if this is the first input this year, and makes new workbook if so
 def set_new_year():
+    '''Checks if this is the first input this year, and makes new workbook if so'''
     ny = px.load_workbook('blank.xlsx')
     ny.create_sheet(index = 0, title = 'Summary')
     ny.get_sheet_by_name('Summary')['J1'] = 'Average'
@@ -75,8 +76,8 @@ def set_new_year():
     ny.save(str(int(year)+1) +' Monthly Expenses.xlsx')
     return
 
-# Checks if this is first input of the month, and makes new sheet if so
 def setWorkbook():
+    '''Checks if this is first input of the month, and makes new sheet if so'''
     if Sum[get_column_letter(mNum+9) + '1'].value == 'Average':
         if mNum == 12: #mNum is current month expressed as a number. See Main
             set_new_year()
@@ -85,8 +86,8 @@ def setWorkbook():
     currentMonth = wb.get_sheet_by_name(TM[mNum])
     return currentMonth
 
-# Resets look of summary sheet
 def setSummarySheet():
+    '''Resets look of summary sheet'''
     styleYear = Style(font=Font(name='Calibri', bold=True, color='009999'))
     mStyle = Style(font=Font(name='Calibri', color='FFFFFF'))
     mFill = PatternFill(start_color='2E2EB8', fill_type='solid')
@@ -159,7 +160,8 @@ def setMonth():
     month['G1'] = '*Most recent expenses in bold text (Scroll Down)'
     return
 
-def revertStyle(): #Resets previous expenses to normal font
+def revertStyle():
+    '''Resets previous expenses to normal font'''
     standard = Style(font=Font(name='Calibri', bold=False))
     for i in range(2,(x+1)):
         for j in range(0,5):
@@ -169,29 +171,31 @@ def revertStyle(): #Resets previous expenses to normal font
         for b in range(1, mNum):
             Sum[get_column_letter(b+9) + str(a+2)].style = standard
 
-def checkCate(): #Checks if name of input is already in a category
-    d = cword.max_row
+def checkCate():
+    '''Checks if name of input is already in a category'''
+    word = cword.max_row
     theCate = ''
-    for i in range(2, d+1):
+    for i in range(2, word+1):
         if cword['A'+str(i)].value == keyword:
             theCate = cword['B'+str(i)].value
 
     return theCate
 
 
-def addToCate(): #Adds new keyword to category upon request
-    d = cword.max_row + 1
-    # d += 1
-    cword['A'+str(d)] = keyword
+def addToCate():
+    '''Adds new keyword to category upon request'''
+    word = cword.max_row + 1
+    # word += 1
+    cword['A'+str(word)] = keyword
     print('Which category to assign?')
     print()
     for i in range(len(categories)-3):
         print(i, categories[i])
     assign = int(input())
-    cword['B'+str(d)] = categories[assign]
+    cword['B'+str(word)] = categories[assign]
 
-# Major part of code. This is where users input each expense
 def addExpense():
+'''Major part of code. This is where users input each expense'''
     global x, keyword
     x += 1
     current = Style(font=Font(name='Cooper Black', bold=False))
@@ -264,7 +268,7 @@ def addExpense():
         else:
             break
 
-    if ['B'+str(x)] == 'Other Food' and float(cost) > float(25): #Find out why this never works
+    if ['B'+str(x)].value == 'Other Food' and float(cost) > float(25): #Find out why this never works
         print('Did you pay for others\' food?')
         if input().lower().startswith('y'):
             month['D'+str(x)].fill = PatternFill(start_color='6DC066', fill_type='solid')
@@ -274,8 +278,8 @@ def addExpense():
         month[get_column_letter(i+1) + str(x)].style = current
 
 
-# Recalculates all category totals in month and year after new expenses
 def categoryTotal():
+    '''Recalculates all category totals in month and year after new expenses'''
     ml = len(categories)
     for g in range(1, mNum+1):
         mez = wb.get_sheet_by_name(TM[g])
@@ -373,7 +377,7 @@ def categoryTotal():
 
 # Gives cumulative price on each month tab
 def cumulativePrice():
-    m = x-1
+    prev = x-1
     if month['C'+str(x)].value == 'qq': #Excludes late previous-month expenses
         if x == 2:
             month['E2'] = 'Not Included'
@@ -388,16 +392,16 @@ def cumulativePrice():
         elif x > 2 and month['E'+str(x-1)].value == 'Not Included':
             match = False
             while match == False: #Skips over any cells that say 'Not Included'
-                if month['E'+str(m)].value == 'Not Included':
-                    if m == 1:
+                if month['E'+str(prev)].value == 'Not Included':
+                    if prev == 1:
                         month['E'+str(x)] = '=D'+str(x)
                     else:
-                        m -= 1
+                        prev -= 1
                 else:
-                    if month['E'+str(m)].value == 'Cumulative Price':
+                    if month['E'+str(prev)].value == 'Cumulative Price':
                         month['E'+str(x)] = '=D'+str(x)
                     else:
-                        month['E'+str(x)] = '=E'+str(m)
+                        month['E'+str(x)] = '=E'+str(prev)
                         match == True
                     break
             return
@@ -406,14 +410,16 @@ def cumulativePrice():
             month['E'+str(x)] = '=D{}+E{}'.format(str(x), str(x-1))
             return
 
-# Makes pie chart for each month
 def monthChartBreakdown():
-    curMonth = ['','January','February','March','April','May','June','July','August','September','October','November','December']
+    '''Makes pie chart for each month'''
+    curMonth = ['', 'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December']
+
     for i in range(1, mNum+1):
         pie = PieChart()
-        m = len(categories)
-        monthData = Reference(Sum, min_col = i+9, min_row = 2, max_row = m-1)
-        labels = Reference(Sum, min_col=8, min_row=2, max_row = m-1)
+        length_m = len(categories)
+        monthData = Reference(Sum, min_col = i+9, min_row = 2, max_row = length_m-1)
+        labels = Reference(Sum, min_col=8, min_row=2, max_row = length_m-1)
         pie.add_data(monthData)
         pie.set_categories(labels)
         pie.title = curMonth[i]+ ' Expenses by Category'
@@ -423,8 +429,8 @@ def monthChartBreakdown():
 
         wb.get_sheet_by_name(TM[i]).add_chart(pie, 'G3')
 
-# Makes pie chart and bar chart for summary tab
 def chartBreakdown():
+    '''Makes pie chart and bar chart for summary tab'''
     pie = PieChart()
     z = len(categories)
 
@@ -457,8 +463,8 @@ def chartBreakdown():
 #    wbSave = saving.Update(xl, 'open')
 #    wbSave.openXL()
 
-# Saves and opens excel workbook with new expenses added
 def save_and_update():
+    '''Saves and opens excel workbook with new expenses added'''
     wb.save(curYear + '.xlsx')
     openXL = input('Would you like to see the additions to your expenses? [Y or N]\n')
     # openXL = input()
@@ -475,29 +481,29 @@ def orderOfStatements():
     categoryTotal()
     moreReceipts()
 
-# Lets user set a month goal for an expense
 def goals():
-    k = True
+    '''Lets user set a month goal for an expense'''
+    loop = True
     print('Enter goal for category, followed by number (Haircut, 30)')
     print()
     for i in range(len(categories)):
         print(categories[i], end=', ')
     print()
-    while k == True:
+    while loop == True:
         goal = input().title().split(', ')
         for c in range(len(categories)-3):
             if categories[c].startswith(goal[0]):
                 Sum[get_column_letter(mNum+12)+str(c+2)] = float(goal[1])
         # print('Another one?')
         if input('Another one?\n').lower().startswith('n'):
-            k = False
+            loop = False
             break
 
     # print('continue with Monthly Expenses?')
     return input('continue with Monthly Expenses?\n').lower()
 
-# Puts late previous-month expenses in previous month tab
 def qqAdd():
+    '''Puts late previous-month expenses in previous month tab'''
     for i in range(2, mNum+1):
         search = wb.get_sheet_by_name(TM[i])
         add = wb.get_sheet_by_name(TM[i-1])
@@ -532,8 +538,8 @@ def moreReceipts():
     else:
         orderOfStatements()
 
-# For small corrections when user doesn't need the entire code to be run
 def shortExit():
+    '''For small corrections when user doesn't need the entire code to be run'''
     categoryTotal()
     monthChartBreakdown()
     chartBreakdown()
