@@ -14,6 +14,7 @@ def setFormat(): #Formatting in excel
         cir[chr(65+i)+'1'] = circuit
 
 def mainMenu():
+    '''Central part of program that has list of viable options'''
     global mode
     mode = ''
     print('What would you like to do?')
@@ -40,7 +41,8 @@ def mainMenu():
         return
 
 
-def pre_Workout(): #selects what to generate based on user's output
+def pre_Workout():
+    '''selects what to generate based on user's output'''
     global mode, x
     while mode != 'single' or mode != 'circuit':
         try:
@@ -61,7 +63,8 @@ def pre_Workout(): #selects what to generate based on user's output
                 break
     return
 
-def addWorkout(): #Adds newly input workout to excel
+def addWorkout():
+    '''Adds newly input workout to excel'''
     global x
     if mode == 'single':
         x += 1
@@ -104,7 +107,8 @@ def addWorkout(): #Adds newly input workout to excel
         circuitDetails()
     moreWorkouts()
 
-def circuitDetails(): #Adds circuit to excel
+def circuitDetails():
+    '''Adds circuit to excel'''
     global x
     d = 1
     x += 1
@@ -139,7 +143,8 @@ def moreWorkouts():
     else:
         mainMenu()
 
-def generate(): #Generates random workout based on days and type of workout
+def generate():
+    '''Generates random workout based on days and type of workout'''
     global txtlist
     typ = setWktType()
     if typ == 'dropset':
@@ -239,7 +244,8 @@ def generate(): #Generates random workout based on days and type of workout
         #             txtlist.append(theDrop)
         #         day.remove(day[w])
 
-def circuitGenerate(): #Generates circuit workout
+def circuitGenerate():
+    '''Generates circuit workout'''
     global txtlist
     print('Which circuit are you trying to do?')
     print()
@@ -280,7 +286,8 @@ def acceptWorkout():
         txtfile()
         return
 
-def howTo(): #Looks up workouts on YouTube
+def howTo():
+    '''Looks up workouts on YouTube'''
     print('Which ones? (Pick the corresponding number)')
     print()
     for i in range(len(txtlist)):
@@ -296,6 +303,7 @@ def howTo(): #Looks up workouts on YouTube
 
 
 def setWktType(typ='standard'):
+    '''Calculates weight of workouts differently based on type of workout'''
     print('Your workout is set to standard. Is this okay?')
     if input().lower().startswith('n'):
         print('Which mode do you want?')
@@ -315,7 +323,8 @@ def setWktType(typ='standard'):
     return typ
 
 
-def txtfile(): #Prints generated workout to a text file
+def txtfile():
+    '''Prints generated workout to a text file'''
     if mode == 'single':
         sun = (datetime.timedelta(days=6)).days - datetime.datetime.today().weekday()
         top = datetime.datetime.now() + datetime.timedelta(days=sun)
